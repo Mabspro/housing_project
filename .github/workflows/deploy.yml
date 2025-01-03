@@ -43,7 +43,7 @@ jobs:
         run: npm run build
         env:
           CI: false  # Prevents treating warnings as errors
-          REACT_APP_API_BASE_URL: https://rise-zambia-housing-api.onrender.com/api
+          REACT_APP_API_BASE_URL: https://housing-project-r7jbm7l0e-mabvuto-kaelas-projects.vercel.app/api
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
