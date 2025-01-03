@@ -28,7 +28,8 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3001",
         "http://127.0.0.1:3001",
-        "https://mabspro.github.io"
+        "https://mabspro.github.io",
+        "https://mabspro.github.io/housing_project"
     ],
     allow_credentials=False,
     allow_methods=["GET", "POST", "PUT", "DELETE"],
