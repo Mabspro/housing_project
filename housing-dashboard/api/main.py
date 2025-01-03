@@ -22,10 +22,14 @@ load_dotenv()
 
 app = FastAPI(title="Housing Market Analysis API")
 
-# Configure CORS for development
+# Configure CORS for development and production
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3001", "http://127.0.0.1:3001"],
+    allow_origins=[
+        "http://localhost:3001",
+        "http://127.0.0.1:3001",
+        "https://mabspro.github.io"
+    ],
     allow_credentials=False,
     allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["Authorization", "Content-Type", "Accept"],
@@ -260,4 +264,4 @@ async def get_market_heatmap():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8002)
+    uvicorn.run(app, host="0.0.0.0", port=8000)

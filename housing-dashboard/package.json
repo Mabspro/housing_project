@@ -13,7 +13,6 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/d3": "^7.4.3",
     "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.68",
     "@types/plotly.js": "^2.12.30",
     "@types/react": "^18.2.42",
     "@types/react-dom": "^18.2.17",
@@ -31,7 +30,7 @@
   },
   "scripts": {
     "start": "set PORT=3001 && react-scripts start",
-    "start:api": "cd api && python -m uvicorn main:app --reload",
+    "start:api": "cd api && python -m uvicorn main:app --reload --port 8000",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -58,7 +57,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@types/node": "^22.10.4",
     "concurrently": "^8.2.2"
-  },
-  "proxy": "http://127.0.0.1:8002"
+  }
 }
