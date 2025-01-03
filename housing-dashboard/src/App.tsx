@@ -1,6 +1,11 @@
 import React from 'react';
 import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
-import Dashboard from './components/layout/Dashboard/index.tsx';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import MainLayout from './components/layout/MainLayout/index.tsx';
+import DashboardPage from './pages/Dashboard/index.tsx';
+import MarketTrendsPage from './pages/MarketTrends/index.tsx';
+import RegionalAnalysisPage from './pages/RegionalAnalysis/index.tsx';
+import SettingsPage from './pages/Settings/index.tsx';
 
 const theme = createTheme({
   palette: {
@@ -37,10 +42,20 @@ const theme = createTheme({
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Dashboard />
-    </ThemeProvider>
+    <Router>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <MainLayout>
+          <Routes>
+            <Route path="/" element={<DashboardPage />} />
+            <Route path="/trends" element={<MarketTrendsPage />} />
+            <Route path="/regional" element={<RegionalAnalysisPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </MainLayout>
+      </ThemeProvider>
+    </Router>
   );
 }
 
