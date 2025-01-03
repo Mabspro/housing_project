@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Typography, Box } from '@mui/material';
 
-const MarketTrendsPage: React.FC = () => {
+const MarketTrends: React.FC = () => {
   return (
     <Container maxWidth="xl">
       <Box sx={{ my: 4 }}>
@@ -16,4 +16,4 @@ const MarketTrendsPage: React.FC = () => {
   );
 };
 
-export default MarketTrendsPage;
+export default MarketTrends;

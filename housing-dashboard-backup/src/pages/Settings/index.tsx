@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Typography, Box, Paper, List, ListItem, ListItemText, Switch } from '@mui/material';
 
-const SettingsPage: React.FC = () => {
+const Settings: React.FC = () => {
   return (
     <Container maxWidth="xl">
       <Box sx={{ my: 4 }}>
@@ -39,4 +39,4 @@ const SettingsPage: React.FC = () => {
   );
 };
 
-export default SettingsPage;
+export default Settings;

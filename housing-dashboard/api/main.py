@@ -28,6 +28,7 @@ app.add_middleware(
     allow_origins=[
         "https://mabspro.github.io",  # Frontend hosted on GitHub Pages
         "http://localhost:3000",  # Local frontend for development
+        "http://localhost:3001",
     ],
     allow_credentials=True,
     allow_methods=["*"],
