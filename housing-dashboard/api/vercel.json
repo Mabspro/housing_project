@@ -9,7 +9,12 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "main.py"
+      "dest": "main.py",
+      "headers": {
+        "Access-Control-Allow-Origin": "https://mabspro.github.io",
+        "Access-Control-Allow-Methods": "GET",
+        "Access-Control-Allow-Headers": "*"
+      }
     }
   ],
   "env": {
