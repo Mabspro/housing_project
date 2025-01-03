@@ -22,12 +22,18 @@ load_dotenv()
 
 app = FastAPI(title="Housing Market Analysis API")
 
-# Configure CORS
+# Configure CORS for development and production
+origins = [
+    "http://localhost:3000",  # React local development
+    "http://localhost:3001",  # React local development
+    "https://mabspro.github.io",  # GitHub Pages
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://mabspro.github.io"],
-    allow_credentials=False,
-    allow_methods=["GET"],
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
     allow_headers=["*"],
 )
 
