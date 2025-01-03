@@ -48,34 +48,74 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   ];
 
   const drawer = (
-    <div>
-      <Toolbar>
-          <Typography variant="h6" noWrap component="div" sx={{ 
-            fontWeight: 'bold',
-            fontSize: { xs: '1rem', sm: '1.25rem' }
-          }}>
-            Housing Analytics
-          </Typography>
+    <Box sx={{ height: '100%', bgcolor: 'background.paper' }}>
+      <Toolbar sx={{ 
+        borderBottom: '1px solid',
+        borderColor: 'divider',
+        mb: 1
+      }}>
+        <Typography variant="h6" noWrap component="div" sx={{ 
+          fontWeight: 'bold',
+          fontSize: { xs: '1.1rem', sm: '1.25rem' },
+          color: 'primary.main'
+        }}>
+          RISE DATA INC
+        </Typography>
       </Toolbar>
       <List>
-        {menuItems.map((item) => (
-          <ListItem
-            button
-            key={item.text}
-            onClick={() => {
-              navigate(item.path);
-              if (isMobile) {
-                setMobileOpen(false);
-              }
-            }}
-            selected={location.pathname === item.path}
-          >
-            <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText primary={item.text} />
-          </ListItem>
-        ))}
+        {menuItems.map((item) => {
+          const isActive = location.pathname === item.path;
+          return (
+            <ListItem
+              button
+              key={item.text}
+              onClick={() => {
+                navigate(item.path);
+                if (isMobile) {
+                  setMobileOpen(false);
+                }
+              }}
+              selected={isActive}
+              sx={{
+                mb: 0.5,
+                mx: 1,
+                borderRadius: 1,
+                transition: 'all 0.2s ease',
+                '&.Mui-selected': {
+                  bgcolor: 'primary.main',
+                  color: 'primary.contrastText',
+                  '& .MuiListItemIcon-root': {
+                    color: 'inherit'
+                  },
+                  '&:hover': {
+                    bgcolor: 'primary.dark'
+                  }
+                },
+                '&:hover': {
+                  bgcolor: isActive ? 'primary.dark' : 'action.hover',
+                  borderRadius: 1
+                }
+              }}
+            >
+              <ListItemIcon sx={{ 
+                minWidth: 40,
+                color: isActive ? 'inherit' : 'primary.main',
+                transition: 'color 0.2s ease'
+              }}>
+                {item.icon}
+              </ListItemIcon>
+              <ListItemText 
+                primary={item.text} 
+                primaryTypographyProps={{
+                  fontSize: '0.95rem',
+                  fontWeight: isActive ? 'bold' : 'normal'
+                }}
+              />
+            </ListItem>
+          );
+        })}
       </List>
-    </div>
+    </Box>
   );
 
   return (
@@ -86,23 +126,41 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
+          bgcolor: 'background.paper',
+          color: 'text.primary',
+          boxShadow: '0 2px 10px rgba(0,0,0,0.05)',
+          backdropFilter: 'blur(8px)',
+          borderBottom: '1px solid',
+          borderColor: 'divider'
         }}
       >
-        <Toolbar>
+        <Toolbar sx={{ display: 'flex', justifyContent: 'center' }}>
           <IconButton
-            color="inherit"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
+            sx={{ 
+              mr: 2,
+              position: 'absolute',
+              left: 16,
+              display: { sm: 'none' },
+              color: 'primary.main',
+              '&:hover': {
+                bgcolor: 'primary.main',
+                color: 'primary.contrastText'
+              },
+              transition: 'all 0.2s ease'
+            }}
           >
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div" sx={{ 
             fontWeight: 'bold',
-            fontSize: { xs: '1rem', sm: '1.25rem' }
+            fontSize: { xs: '1.1rem', sm: '1.25rem' },
+            color: 'primary.main',
+            textAlign: 'center'
           }}>
-            US Market Dashboard
+            Market Trends and Statistics
           </Typography>
         </Toolbar>
       </AppBar>
@@ -119,7 +177,15 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            '& .MuiDrawer-paper': { 
+              boxSizing: 'border-box', 
+              width: drawerWidth,
+              boxShadow: 3,
+              border: 'none'
+            },
+            '& .MuiBackdrop-root': {
+              backdropFilter: 'blur(4px)'
+            }
           }}
         >
           {drawer}
@@ -128,7 +194,13 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           variant="permanent"
           sx={{
             display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            '& .MuiDrawer-paper': { 
+              boxSizing: 'border-box', 
+              width: drawerWidth,
+              borderRight: '1px solid',
+              borderColor: 'divider',
+              boxShadow: 'none'
+            },
           }}
           open
         >
@@ -139,9 +211,10 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         component="main"
         sx={{
           flexGrow: 1,
-          p: 3,
+          p: { xs: 2, sm: 3 },
           width: { sm: `calc(100% - ${drawerWidth}px)` },
-          mt: '64px'
+          mt: '64px',
+          overflowX: 'auto'
         }}
       >
         {children}
