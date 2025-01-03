@@ -13,6 +13,11 @@
     }
   ],
   "env": {
-    "PYTHONPATH": "."
+    "PYTHONPATH": ".",
+    "DB_USER": "postgres.uhfrcjhackormolekcxk",
+    "DB_PASSWORD": "Idexx@15234",
+    "DB_HOST": "aws-0-us-west-1.pooler.supabase.com",
+    "DB_PORT": "6543",
+    "DB_NAME": "postgres"
   }
 }

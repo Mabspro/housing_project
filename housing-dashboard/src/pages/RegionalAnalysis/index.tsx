@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Typography, Box } from '@mui/material';
 
-const RegionalAnalysisPage: React.FC = () => {
+const RegionalAnalysis: React.FC = () => {
   return (
     <Container maxWidth="xl">
       <Box sx={{ my: 4 }}>
@@ -16,4 +16,4 @@ const RegionalAnalysisPage: React.FC = () => {
   );
 };
 
-export default RegionalAnalysisPage;
+export default RegionalAnalysis;

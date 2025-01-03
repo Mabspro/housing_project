@@ -42,8 +42,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
   const menuItems = [
     { text: 'Dashboard', icon: <DashboardIcon />, path: '/' },
-    { text: 'Market Trends', icon: <TrendingUpIcon />, path: '/trends' },
-    { text: 'Regional Analysis', icon: <MapIcon />, path: '/regional' },
+    { text: 'Market Trends', icon: <TrendingUpIcon />, path: '/market-trends' },
+    { text: 'Regional Analysis', icon: <MapIcon />, path: '/regional-analysis' },
     { text: 'Settings', icon: <SettingsIcon />, path: '/settings' }
   ];
 
