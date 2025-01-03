@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Grid, Paper, Typography, Box, CircularProgress } from '@mui/material';
-import CityTrendsChart from '../../components/charts/CityTrendsChart/index.tsx';
-import GrowthRatesChart from '../../components/charts/GrowthRatesChart/index.tsx';
-import MarketHeatmap from '../../components/charts/MarketHeatmap/index.tsx';
-import api, { CityTrendsData, GrowthRatesData, MarketHeatmapData } from '../../services/api.ts';
+import CityTrendsChart from '../../components/charts/CityTrendsChart';
+import GrowthRatesChart from '../../components/charts/GrowthRatesChart';
+import MarketHeatmap from '../../components/charts/MarketHeatmap';
+import api, { CityTrendsData, GrowthRatesData, MarketHeatmapData } from '../../services/api';
 
 interface DashboardData {
   cityTrends: CityTrendsData | null;
@@ -124,12 +124,12 @@ const DashboardPage: React.FC = () => {
           align="center"
           sx={{
             fontSize: { xs: '1.75rem', sm: '2.25rem', md: '2.75rem' },
-            mb: { xs: 1, sm: 2 },
+            mb: { xs: 2, sm: 3 },
             fontWeight: 'bold',
             color: 'primary.main'
           }}
         >
-          Real Estate Market Analytics
+          Market Trends and Statistics
         </Typography>
         
         <Typography 
@@ -141,7 +141,7 @@ const DashboardPage: React.FC = () => {
             fontSize: { xs: '1rem', sm: '1.1rem' },
             maxWidth: '800px',
             mx: 'auto',
-            lineHeight: 1.5
+            lineHeight: 1.6
           }}
         >
           Explore comprehensive insights into real estate market trends, growth patterns, and regional performance metrics across major metropolitan areas.

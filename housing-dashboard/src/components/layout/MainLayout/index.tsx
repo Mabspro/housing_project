@@ -22,6 +22,7 @@ import {
   Settings as SettingsIcon
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
+import Footer from '../Footer';
 
 const drawerWidth = 240;
 
@@ -119,7 +120,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   );
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', minHeight: '100vh' }}>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -211,13 +212,17 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         component="main"
         sx={{
           flexGrow: 1,
-          p: { xs: 2, sm: 3 },
           width: { sm: `calc(100% - ${drawerWidth}px)` },
-          mt: '64px',
-          overflowX: 'auto'
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: '100vh',
+          pt: '64px'
         }}
       >
-        {children}
+        <Box sx={{ flex: 1, p: { xs: 2, sm: 3 } }}>
+          {children}
+        </Box>
+        <Footer />
       </Box>
     </Box>
   );
