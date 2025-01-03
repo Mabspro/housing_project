@@ -25,12 +25,7 @@ app = FastAPI(title="Housing Market Analysis API")
 # Configure CORS for development and production
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3001",
-        "http://127.0.0.1:3001",
-        "https://mabspro.github.io",
-        "https://mabspro.github.io/housing_project"
-    ],
+    allow_origins=["*"],  # Temporarily allow all origins for testing
     allow_credentials=False,
     allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["Authorization", "Content-Type", "Accept"],
