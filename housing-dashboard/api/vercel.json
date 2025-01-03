@@ -1,20 +1,8 @@
 {
-  "version": 2,
-  "builds": [
+  "rewrites": [
     {
-      "src": "main.py",
-      "use": "@vercel/python"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "main.py",
-      "headers": {
-        "Access-Control-Allow-Origin": "https://mabspro.github.io",
-        "Access-Control-Allow-Methods": "GET",
-        "Access-Control-Allow-Headers": "*"
-      }
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
     }
   ],
   "env": {
