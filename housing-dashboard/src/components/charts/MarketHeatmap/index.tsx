@@ -42,11 +42,14 @@ const MarketHeatmap: React.FC<MarketHeatmapProps> = ({ data }) => {
         size: isMobile ? 12 : 14,
         family: 'Arial, sans-serif'
       } as any,
-      tickformat: '.1%',
+      tickformat: '.0%',
       len: 0.8,
       thickness: isMobile ? 15 : 20,
       x: 1,
-      xpad: 10
+      xpad: 10,
+      nticks: isMobile ? 2 : 5, // Show only extreme values on mobile
+      tickvals: isMobile ? [-0.1, 0.1] : undefined, // -10% and 10% on mobile
+      ticktext: isMobile ? ['-10%', '10%'] : undefined
     }
   }];
 
