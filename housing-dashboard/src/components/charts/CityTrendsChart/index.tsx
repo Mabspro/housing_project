@@ -121,8 +121,8 @@ const CityTrendsChart: React.FC<CityTrendsChartProps> = ({ data }) => {
       config={config}
       style={{ 
         width: '100%', 
-        height: isMobile ? '300px' : isTablet ? '350px' : '400px',
-        minHeight: '250px'
+        height: isMobile ? '250px' : isTablet ? '350px' : '400px',
+        minHeight: '200px'
       }}
     />
   );
