@@ -148,11 +148,11 @@ const DashboardPage: React.FC = () => {
         </Typography>
 
         <Grid container spacing={{ xs: 2, sm: 3 }} sx={{ mb: { xs: 3, sm: 4 } }}>
-          <Grid item xs={6} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={3}>
             <Paper 
               elevation={0} 
               sx={{ 
-                p: { xs: 1.5, sm: 2 }, 
+                p: { xs: 2, sm: 2 }, 
                 bgcolor: 'background.paper', 
                 borderRadius: 2,
                 height: '100%',
@@ -186,11 +186,11 @@ const DashboardPage: React.FC = () => {
               </Typography>
             </Paper>
           </Grid>
-          <Grid item xs={6} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={3}>
             <Paper 
               elevation={0} 
               sx={{ 
-                p: { xs: 1.5, sm: 2 }, 
+                p: { xs: 2, sm: 2 }, 
                 bgcolor: 'background.paper', 
                 borderRadius: 2,
                 height: '100%',
@@ -224,11 +224,11 @@ const DashboardPage: React.FC = () => {
               </Typography>
             </Paper>
           </Grid>
-          <Grid item xs={6} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={3}>
             <Paper 
               elevation={0} 
               sx={{ 
-                p: { xs: 1.5, sm: 2 }, 
+                p: { xs: 2, sm: 2 }, 
                 bgcolor: 'background.paper', 
                 borderRadius: 2,
                 height: '100%',
@@ -280,11 +280,11 @@ const DashboardPage: React.FC = () => {
               </Box>
             </Paper>
           </Grid>
-          <Grid item xs={6} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={3}>
             <Paper 
               elevation={0} 
               sx={{ 
-                p: { xs: 1.5, sm: 2 }, 
+                p: { xs: 2, sm: 2 }, 
                 bgcolor: 'background.paper', 
                 borderRadius: 2,
                 height: '100%',
@@ -309,7 +309,7 @@ const DashboardPage: React.FC = () => {
                 variant="h6" 
                 sx={{ 
                   fontWeight: 'bold',
-                  fontSize: { xs: '0.9rem', sm: '1.1rem', md: '1.25rem' },
+                  fontSize: { xs: '1rem', sm: '1.1rem', md: '1.25rem' },
                   lineHeight: 1.2
                 }}
               >
@@ -361,6 +361,18 @@ const DashboardPage: React.FC = () => {
               <Box sx={{ 
                 mt: 2,
                 overflowX: 'auto',
+                position: 'relative',
+                '&::after': {
+                  content: '""',
+                  position: 'absolute',
+                  right: 0,
+                  top: 0,
+                  bottom: 0,
+                  width: '40px',
+                  background: 'linear-gradient(to right, transparent, rgba(255,255,255,0.9))',
+                  pointerEvents: 'none',
+                  display: { xs: 'block', md: 'none' }
+                },
                 '& > div': {
                   minWidth: { xs: '600px', md: '100%' }
                 }
