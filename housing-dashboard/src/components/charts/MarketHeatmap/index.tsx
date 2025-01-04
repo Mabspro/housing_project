@@ -31,7 +31,7 @@ const MarketHeatmap: React.FC<MarketHeatmapProps> = ({ data }) => {
     text: [formattedText] as any,
     texttemplate: '%{text}',
     textfont: {
-      size: isMobile ? 8 : isTablet ? 9 : 10,
+      size: isMobile ? 10 : isTablet ? 11 : 12,
       family: 'Arial, sans-serif'
     } as any,
     hoverongaps: false,
@@ -39,12 +39,14 @@ const MarketHeatmap: React.FC<MarketHeatmapProps> = ({ data }) => {
     colorbar: {
       title: 'Growth Rate',
       titlefont: {
-        size: isMobile ? 10 : 12,
+        size: isMobile ? 12 : 14,
         family: 'Arial, sans-serif'
       } as any,
       tickformat: '.1%',
-      len: isMobile ? 0.8 : 1,
-      thickness: isMobile ? 15 : 20
+      len: 0.8,
+      thickness: isMobile ? 15 : 20,
+      x: 1,
+      xpad: 10
     }
   }];
 
@@ -60,54 +62,39 @@ const MarketHeatmap: React.FC<MarketHeatmapProps> = ({ data }) => {
       title: {
         text: 'Markets',
         font: {
-          size: isMobile ? 10 : 12,
+          size: isMobile ? 12 : 14,
           family: 'Arial, sans-serif'
         } as any,
-        standoff: 25
+        standoff: isMobile ? 30 : 25
       },
-      tickangle: isMobile ? 60 : 45,
+      tickangle: 45,
       showgrid: false,
       tickfont: {
-        size: isMobile ? 8 : 10,
+        size: isMobile ? 10 : 12,
         family: 'Arial, sans-serif'
       } as any,
-      automargin: true
+      automargin: true,
+      tickmode: 'auto',
+      nticks: isMobile ? 5 : undefined
     },
     yaxis: {
       showgrid: false,
       ticksuffix: '  ',
       tickfont: {
-        size: isMobile ? 8 : 10,
+        size: isMobile ? 10 : 12,
         family: 'Arial, sans-serif'
       } as any,
       automargin: true
     },
     margin: {
-      l: isMobile ? 60 : 100,
-      r: isMobile ? 30 : 50,
+      l: isMobile ? 40 : 80,
+      r: isMobile ? 60 : 80,
       t: isMobile ? 40 : 50,
-      b: isMobile ? 120 : 140,
-      pad: isMobile ? 0 : 4
+      b: isMobile ? 100 : 80,
+      pad: 4
     },
     plot_bgcolor: 'white',
-    paper_bgcolor: 'white',
-    annotations: [{
-      xref: 'paper',
-      yref: 'paper',
-      x: 0.5,
-      xanchor: 'center',
-      y: -0.35,
-      yanchor: 'top',
-      text: 'Red indicates higher growth rates while blue shows lower growth.<br>Markets are sorted by Average Growth Rate.',
-      showarrow: false,
-      align: 'center',
-      font: {
-        size: isMobile ? 8 : isTablet ? 9 : 10,
-        family: 'Arial, sans-serif'
-      } as any,
-      bgcolor: 'rgba(255, 255, 255, 0.95)',
-      borderpad: 4
-    }]
+    paper_bgcolor: 'white'
   };
 
   const config: Partial<Config> = {
@@ -128,7 +115,7 @@ const MarketHeatmap: React.FC<MarketHeatmapProps> = ({ data }) => {
       config={config}
       style={{ 
         width: '100%', 
-        height: isMobile ? '250px' : isTablet ? '350px' : '400px',
+        height: isMobile ? '250px' : isTablet ? '300px' : '350px',
         minHeight: '200px'
       }}
     />

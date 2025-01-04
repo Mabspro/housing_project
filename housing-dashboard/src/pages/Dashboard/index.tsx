@@ -108,7 +108,21 @@ const DashboardPage: React.FC = () => {
   }
 
   return (
-    <Container maxWidth="xl" sx={{ px: { xs: 2, sm: 3 } }}>
+    <Container 
+      maxWidth="xl"
+      sx={{ 
+        px: { xs: 1, sm: 2, md: 3 },
+        mx: 'auto',
+        width: '100%',
+        maxWidth: {
+          xs: '100%',
+          sm: '600px',
+          md: '900px',
+          lg: '1200px',
+          xl: '1536px'
+        }
+      }}
+    >
       <Box 
         sx={{ 
           my: { xs: 3, sm: 4 },
@@ -423,6 +437,18 @@ const DashboardPage: React.FC = () => {
               <Box sx={{ 
                 mt: 2,
                 overflowX: 'auto',
+                position: 'relative',
+                '&::after': {
+                  content: '""',
+                  position: 'absolute',
+                  right: 0,
+                  top: 0,
+                  bottom: 0,
+                  width: '40px',
+                  background: 'linear-gradient(to right, transparent, rgba(255,255,255,0.9))',
+                  pointerEvents: 'none',
+                  display: { xs: 'block', md: 'none' }
+                },
                 '& > div': {
                   minWidth: { xs: '600px', md: '100%' }
                 }
@@ -468,11 +494,32 @@ const DashboardPage: React.FC = () => {
                   lineHeight: 1.5
                 }}
               >
-                Visualize current market performance across regions with an intuitive heatmap highlighting growth variations.
+                Visualize current market performance across regions with an intuitive heatmap highlighting growth variations. 
+                <Box component="span" sx={{ 
+                  display: 'block', 
+                  mt: 1,
+                  color: 'text.secondary',
+                  fontSize: { xs: '0.8rem', sm: '0.9rem' },
+                  fontStyle: 'italic'
+                }}>
+                  * Red indicates higher growth rates while blue shows lower growth. Markets are sorted by Average Growth Rate.
+                </Box>
               </Typography>
               <Box sx={{ 
                 mt: 2,
                 overflowX: 'auto',
+                position: 'relative',
+                '&::after': {
+                  content: '""',
+                  position: 'absolute',
+                  right: 0,
+                  top: 0,
+                  bottom: 0,
+                  width: '40px',
+                  background: 'linear-gradient(to right, transparent, rgba(255,255,255,0.9))',
+                  pointerEvents: 'none',
+                  display: { xs: 'block', md: 'none' }
+                },
                 '& > div': {
                   minWidth: { xs: '600px', md: '100%' }
                 }
