@@ -15,21 +15,43 @@ Interactive visualization dashboard for housing market analysis, featuring price
 
 ```
 housing-project/
-├── housing-dashboard/     # Main application directory
-│   ├── src/              # React frontend source
-│   │   ├── components/   # React components
-│   │   └── services/     # API services
-│   ├── api/              # FastAPI backend
-│   │   ├── main.py      # API endpoints
-│   │   └── test_db.py   # Database tests
+├── backups/              # Database backups
+├── data/                 # Data storage
+│   ├── bls/             # Bureau of Labor Statistics data
+│   ├── census/          # Census Bureau data
+│   └── kaggle/          # Kaggle datasets
+├── housing-dashboard/    # Main application
+│   ├── src/             # React frontend
+│   │   └── services/    # API services
+│   ├── api/             # FastAPI backend
+│   │   └── main.py      # API endpoints
 │   └── public/          # Static assets
-├── scripts/             # Data processing scripts
-├── models/             # Analysis models
-├── notebooks/         # Jupyter notebooks
-├── dashboards/        # Generated visualizations
-├── data/             # Dataset storage
-└── config/          # Configuration files
+└── scripts/             # ETL and utility scripts
+    ├── scrapers/        # Data extraction scripts
+    ├── data_cleaning.py # Data cleaning utilities
+    ├── process_datasets.py # Data processing pipeline
+    ├── drop_create_db.py  # Database management
+    ├── backup_db.py     # Database backup utility
+    └── load_to_db.py    # Database loading
 ```
+
+## ETL Pipeline
+
+1. **Extract**: Data collection from multiple sources
+   - BLS housing data (CPI, costs)
+   - Census housing statistics
+   - Kaggle datasets (prices, rates)
+
+2. **Transform**: Data cleaning and processing
+   - Standardize date formats
+   - Handle missing values
+   - Calculate growth rates
+   - Validate numeric data
+
+3. **Load**: Database operations
+   - PostgreSQL database storage
+   - Automated data loading
+   - Data integrity checks
 
 ## Prerequisites
 
@@ -58,20 +80,36 @@ pip install -r requirements.txt
 ```
 
 4. Configure environment variables:
-Create `.env` files in both the frontend and API directories:
 
 housing-dashboard/.env:
 ```
 REACT_APP_API_URL=http://localhost:8002
 ```
 
-housing-dashboard/api/.env:
+scripts/scrapers/.env:
 ```
-DATABASE_URL=postgresql://[username]:[password]@localhost:5432/housing_db
-PORT=8002
+DB_NAME=housing_db
+DB_USER=[username]
+DB_PASSWORD=[password]
+DB_HOST=localhost
+DB_PORT=5432
 ```
 
-5. Start the development servers:
+5. Initialize the database:
+```bash
+python scripts/drop_create_db.py
+```
+
+6. Run the ETL pipeline:
+```bash
+# Extract and process data
+python scripts/process_datasets.py
+
+# Load data into database
+python scripts/scrapers/load_to_db.py
+```
+
+7. Start the development servers:
 
 Backend:
 ```bash
@@ -87,37 +125,22 @@ npm start
 
 The application will be available at http://localhost:3000
 
-## Recent Updates
+## Key Scripts
 
-### API Improvements
-- Fixed SQL query syntax and date handling
-- Implemented proper date aggregation with CTE
-- Added comprehensive error handling and logging
-- Configured CORS for frontend communication
+- `scripts/scrapers/*.py`: Data extraction from various sources
+- `scripts/data_cleaning.py`: Core data cleaning utilities
+- `scripts/process_datasets.py`: Data processing pipeline
+- `scripts/drop_create_db.py`: Database initialization
+- `scripts/backup_db.py`: Database backup creation
+- `scripts/load_to_db.py`: Data loading into database
 
-### Frontend Configuration
-- Updated proxy settings to connect to API port 8002
-- Configured proper API base URL
-- Resolved port conflicts for development server
-
-### Data Visualization
-- City Trends Chart showing historical price data
-- Growth Rates Chart displaying YoY changes
-- Market Heatmap showing current market performance
-
-## Development
+## Development Stack
 
 - Frontend: React with TypeScript
 - Data Visualization: Plotly.js
 - Backend: Python with FastAPI
 - Database: PostgreSQL
-
-## Scripts
-
-- `download_dataset.py`: Downloads housing market data
-- `transform_load.py`: Processes and loads data into database
-- `test_db_connection.py`: Verifies database connectivity
-- `run_dev.bat`: Windows script to start development servers
+- ETL: Custom Python pipeline
 
 ## Contributing
 
