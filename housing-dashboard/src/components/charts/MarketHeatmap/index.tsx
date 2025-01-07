@@ -22,7 +22,7 @@ const MarketHeatmap: React.FC<MarketHeatmapProps> = ({ data }) => {
   const traces: Data[] = [{
     type: 'heatmap' as const,
     z: [data.growthRates],
-    y: ['Average Growth'],
+    y: ['Current Growth'],
     x: data.markets,
     colorscale: 'RdBu',
     reversescale: true,
@@ -37,7 +37,7 @@ const MarketHeatmap: React.FC<MarketHeatmapProps> = ({ data }) => {
     hoverongaps: false,
     showscale: true,
     colorbar: {
-      title: 'Growth Rate',
+      title: 'Annual Rental Growth',
       titlefont: {
         size: isMobile ? 12 : 14,
         family: 'Arial, sans-serif'
@@ -55,7 +55,7 @@ const MarketHeatmap: React.FC<MarketHeatmapProps> = ({ data }) => {
 
   const layout: Partial<Layout> = {
     title: {
-      text: 'Market Growth Rate Analysis',
+      text: 'Current Rental Growth by Metropolitan Area',
       font: {
         size: isMobile ? 14 : isTablet ? 16 : 18,
         family: 'Arial, sans-serif'
@@ -63,7 +63,7 @@ const MarketHeatmap: React.FC<MarketHeatmapProps> = ({ data }) => {
     },
     xaxis: {
       title: {
-        text: 'Markets',
+        text: 'Metropolitan Areas',
         font: {
           size: isMobile ? 12 : 14,
           family: 'Arial, sans-serif'
@@ -106,7 +106,7 @@ const MarketHeatmap: React.FC<MarketHeatmapProps> = ({ data }) => {
     modeBarButtonsToRemove: ['lasso2d', 'select2d', 'zoom2d', 'pan2d'] as any[],
     toImageButtonOptions: {
       format: 'png',
-      filename: 'market_heatmap'
+      filename: 'rental_market_heatmap'
     },
     scrollZoom: false
   };

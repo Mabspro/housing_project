@@ -19,14 +19,28 @@ const formatPercentage = (value: number): string => {
 // Helper function to get stats from data
 const getStats = (data: CityTrendsData | null) => {
   if (!data) return { hpiGrowth: 'N/A', totalCities: 0 };
-  const cities = Object.keys(data.values).filter(city => city !== 'U.S. National');
+  const cities = Object.keys(data.values);
   const lastIndex = data.date.length - 1;
   const firstIndex = 0;
-  const nationalStart = data.values['U.S. National']?.[firstIndex] || 0;
-  const nationalEnd = data.values['U.S. National']?.[lastIndex] || 0;
-  const growthRate = (nationalEnd / nationalStart) - 1;
+
+  // Calculate average growth across all cities
+  let totalGrowth = 0;
+  let validCityCount = 0;
+
+  cities.forEach(city => {
+    const startValue = data.values[city][firstIndex];
+    const endValue = data.values[city][lastIndex];
+    if (startValue && endValue) {
+      const growth = (endValue / startValue) - 1;
+      totalGrowth += growth;
+      validCityCount++;
+    }
+  });
+
+  const averageGrowth = validCityCount > 0 ? totalGrowth / validCityCount : 0;
+
   return {
-    hpiGrowth: formatPercentage(growthRate),
+    hpiGrowth: formatPercentage(averageGrowth),
     totalCities: cities.length
   };
 };
@@ -143,7 +157,7 @@ const DashboardPage: React.FC = () => {
             color: 'primary.main'
           }}
         >
-          Market Trends and Statistics
+          Rental Market Trends and Statistics
         </Typography>
         
         <Typography 
@@ -158,7 +172,7 @@ const DashboardPage: React.FC = () => {
             lineHeight: 1.6
           }}
         >
-          Explore comprehensive insights into real estate market trends, growth patterns, and regional performance metrics across major metropolitan areas.
+          Explore comprehensive insights into rental market trends, growth patterns, and regional performance metrics across major metropolitan areas.
         </Typography>
 
         <Grid container spacing={{ xs: 2, sm: 3 }} sx={{ mb: { xs: 3, sm: 4 } }}>
@@ -185,7 +199,7 @@ const DashboardPage: React.FC = () => {
                   mb: { xs: 0.5, sm: 1 }
                 }}
               >
-                Highest Growth City
+                Highest Rental Growth
               </Typography>
               <Typography 
                 variant="h6" 
@@ -223,7 +237,7 @@ const DashboardPage: React.FC = () => {
                   mb: { xs: 0.5, sm: 1 }
                 }}
               >
-                Lowest Growth City
+                Lowest Rental Growth
               </Typography>
               <Typography 
                 variant="h6" 
@@ -264,7 +278,7 @@ const DashboardPage: React.FC = () => {
                     alignItems: 'center'
                   }}
                 >
-                  HPI Growth Since 2000
+                  Rental Growth Since 2010
                   <Typography
                     component="span"
                     sx={{
@@ -276,7 +290,7 @@ const DashboardPage: React.FC = () => {
                         color: 'primary.main'
                       }
                     }}
-                    title="Housing Price Index (HPI) growth from base year 2000 (index=100) to present"
+                    title="Average rental price growth across all cities from 2010 to present"
                   >
                     ⓘ
                   </Typography>
@@ -349,29 +363,6 @@ const DashboardPage: React.FC = () => {
                 overflow: 'hidden'
               }}
             >
-              <Typography 
-                variant="h6" 
-                gutterBottom 
-                sx={{ 
-                  fontWeight: 'bold',
-                  fontSize: { xs: '1.1rem', sm: '1.25rem' },
-                  mb: 2
-                }}
-              >
-                Price Index Trends by Metropolitan Area (2000-2023)
-              </Typography>
-              <Typography 
-                variant="body2" 
-                sx={{ 
-                  color: 'text.secondary',
-                  mb: 3,
-                  fontSize: { xs: '0.875rem', sm: '1rem' },
-                  maxWidth: '800px',
-                  lineHeight: 1.5
-                }}
-              >
-                Track historical price index evolution across major metropolitan areas, normalized to a base year for comparative analysis.
-              </Typography>
               <Box sx={{ 
                 mt: 2,
                 overflowX: 'auto',
@@ -411,29 +402,6 @@ const DashboardPage: React.FC = () => {
                 overflow: 'hidden'
               }}
             >
-              <Typography 
-                variant="h6" 
-                gutterBottom 
-                sx={{ 
-                  fontWeight: 'bold',
-                  fontSize: { xs: '1.1rem', sm: '1.25rem' },
-                  mb: 2
-                }}
-              >
-                Annual Growth Rate Analysis
-              </Typography>
-              <Typography 
-                variant="body2" 
-                sx={{ 
-                  color: 'text.secondary',
-                  mb: 3,
-                  fontSize: { xs: '0.875rem', sm: '1rem' },
-                  maxWidth: '800px',
-                  lineHeight: 1.5
-                }}
-              >
-                Compare year-over-year growth rates across metropolitan areas to identify emerging market opportunities and trends.
-              </Typography>
               <Box sx={{ 
                 mt: 2,
                 overflowX: 'auto',
@@ -473,38 +441,6 @@ const DashboardPage: React.FC = () => {
                 overflow: 'hidden'
               }}
             >
-              <Typography 
-                variant="h6" 
-                gutterBottom 
-                sx={{ 
-                  fontWeight: 'bold',
-                  fontSize: { xs: '1.1rem', sm: '1.25rem' },
-                  mb: 2
-                }}
-              >
-                Regional Market Performance
-              </Typography>
-              <Typography 
-                variant="body2" 
-                sx={{ 
-                  color: 'text.secondary',
-                  mb: 3,
-                  fontSize: { xs: '0.875rem', sm: '1rem' },
-                  maxWidth: '800px',
-                  lineHeight: 1.5
-                }}
-              >
-                Visualize current market performance across regions with an intuitive heatmap highlighting growth variations. 
-                <Box component="span" sx={{ 
-                  display: 'block', 
-                  mt: 1,
-                  color: 'text.secondary',
-                  fontSize: { xs: '0.8rem', sm: '0.9rem' },
-                  fontStyle: 'italic'
-                }}>
-                  * Red indicates higher growth rates while blue shows lower growth. Markets are sorted by Average Growth Rate.
-                </Box>
-              </Typography>
               <Box sx={{ 
                 mt: 2,
                 overflowX: 'auto',

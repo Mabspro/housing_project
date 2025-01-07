@@ -15,6 +15,21 @@ export interface MarketHeatmapData {
   growthRates: number[];
 }
 
+export interface HousingAffordabilityData {
+  dates: string[];
+  regions: string[];
+  metrics: {
+    homePrices: { [region: string]: number[] };
+    medianWages: { [region: string]: number[] };
+    interestRates: { [region: string]: number[] };
+    priceToIncomeRatios: { [region: string]: number[] };
+  };
+  metadata: {
+    totalRecords: number;
+    timestamp: string;
+  };
+}
+
 export const fetchCityTrends = async (): Promise<CityTrendsData> => {
   try {
     const response = await fetch(`${API_BASE_URL}/city-trends`);
@@ -54,10 +69,24 @@ export const fetchMarketHeatmap = async (): Promise<MarketHeatmapData> => {
   }
 };
 
+export const fetchHousingAffordability = async (): Promise<HousingAffordabilityData> => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/housing-affordability`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch housing affordability data');
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching housing affordability:', error);
+    throw error;
+  }
+};
+
 export const api = {
   fetchCityTrends,
   fetchGrowthRates,
   fetchMarketHeatmap,
+  fetchHousingAffordability,
 };
 
 export default api;

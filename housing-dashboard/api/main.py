@@ -47,34 +47,19 @@ async def get_city_trends():
     try:
         logger.info("Attempting to fetch city trends data...")
         engine = get_db_connection()
-        # First, get the data types of columns
-        info_query = text("""
-            SELECT 
-                column_name,
-                data_type 
-            FROM 
-                information_schema.columns 
-            WHERE 
-                table_name = 'housing_prices_cleaned';
-        """)
-        logger.debug(f"Executing schema query: {info_query}")
-        with engine.connect() as conn:
-            result = conn.execute(info_query)
-            columns = [(row[0], row[1]) for row in result]
-            logger.debug(f"Schema columns: {columns}")
-
-        # Then fetch the data
+        # Fetch the data
         query = text("""
             SELECT
                 TO_CHAR(date, 'YYYY-MM') as date,
-                "U.S. National",
-                "NY-New York",
-                "CA-Los Angeles",
-                "IL-Chicago",
-                "TX-Dallas",
-                "FL-Miami"
+                AVG(CASE WHEN region_name = 'New York' THEN price END) as "New York",
+                AVG(CASE WHEN region_name = 'Los Angeles' THEN price END) as "Los Angeles",
+                AVG(CASE WHEN region_name = 'Chicago' THEN price END) as "Chicago",
+                AVG(CASE WHEN region_name = 'Dallas' THEN price END) as "Dallas",
+                AVG(CASE WHEN region_name = 'Miami' THEN price END) as "Miami"
             FROM 
-                housing_prices_cleaned
+                zillow_housing
+            GROUP BY
+                date
             ORDER BY 
                 date;
         """)
@@ -112,44 +97,30 @@ async def get_growth_rates():
     try:
         logger.info("Fetching growth rates data...")
         engine = get_db_connection()
-        # First check the table schema
-        info_query = text("""
-            SELECT 
-                column_name,
-                data_type 
-            FROM 
-                information_schema.columns 
-            WHERE 
-                table_name = 'housing_prices_cleaned';
-        """)
-        logger.debug(f"Executing schema query: {info_query}")
-        with engine.connect() as conn:
-            result = conn.execute(info_query)
-            columns = [(row[0], row[1]) for row in result]
-            logger.debug(f"Schema columns: {columns}")
-
-        # Then execute the main query
+        # Execute the main query
         query_str = """
             WITH monthly_data AS (
                 SELECT 
                     date_trunc('month', date) as month_date,
-                    AVG("NY-New York_YoY") as "NY-New York_YoY",
-                    AVG("CA-Los Angeles_YoY") as "CA-Los Angeles_YoY",
-                    AVG("IL-Chicago_YoY") as "IL-Chicago_YoY",
-                    AVG("TX-Dallas_YoY") as "TX-Dallas_YoY",
-                    AVG("FL-Miami_YoY") as "FL-Miami_YoY"
+                    MAX(CASE WHEN region_name = 'New York' THEN price_yoy END) as "New York_YoY",
+                    MAX(CASE WHEN region_name = 'Los Angeles' THEN price_yoy END) as "Los Angeles_YoY",
+                    MAX(CASE WHEN region_name = 'Chicago' THEN price_yoy END) as "Chicago_YoY",
+                    MAX(CASE WHEN region_name = 'Dallas' THEN price_yoy END) as "Dallas_YoY",
+                    MAX(CASE WHEN region_name = 'Miami' THEN price_yoy END) as "Miami_YoY"
                 FROM 
-                    housing_prices_cleaned
+                    zillow_housing
+                WHERE
+                    region_name IN ('New York', 'Los Angeles', 'Chicago', 'Dallas', 'Miami')
                 GROUP BY 
                     date_trunc('month', date)
             )
             SELECT
                 TO_CHAR(month_date, 'YYYY-MM') AS formatted_date,
-                ROUND("NY-New York_YoY"::numeric, 2) AS "NY-New York_YoY",
-                ROUND("CA-Los Angeles_YoY"::numeric, 2) AS "CA-Los Angeles_YoY",
-                ROUND("IL-Chicago_YoY"::numeric, 2) AS "IL-Chicago_YoY",
-                ROUND("TX-Dallas_YoY"::numeric, 2) AS "TX-Dallas_YoY",
-                ROUND("FL-Miami_YoY"::numeric, 2) AS "FL-Miami_YoY"
+                ROUND(CAST("New York_YoY" AS numeric), 4) AS "New York_YoY",
+                ROUND(CAST("Los Angeles_YoY" AS numeric), 4) AS "Los Angeles_YoY",
+                ROUND(CAST("Chicago_YoY" AS numeric), 4) AS "Chicago_YoY",
+                ROUND(CAST("Dallas_YoY" AS numeric), 4) AS "Dallas_YoY",
+                ROUND(CAST("Miami_YoY" AS numeric), 4) AS "Miami_YoY"
             FROM 
                 monthly_data
             ORDER BY 
@@ -177,7 +148,7 @@ async def get_growth_rates():
                 "date": df['formatted_date'].tolist(),  # Use pandas tolist() for proper serialization
                 "values": {
                     col.replace('_YoY', ''): [
-                        round(float(val), 2) if pd.notna(val) else None 
+                        round(float(val), 4) if pd.notna(val) else None 
                         for val in df[col]
                     ]
                     for col in df.columns if col != 'formatted_date'
@@ -212,18 +183,17 @@ async def get_market_heatmap():
         query = text("""
             SELECT 
                 TO_CHAR(date, 'YYYY-MM') as date,
-                AVG("NY-New York_YoY") as "NY-New York_YoY",
-                AVG("CA-Los Angeles_YoY") as "CA-Los Angeles_YoY",
-                AVG("IL-Chicago_YoY") as "IL-Chicago_YoY",
-                AVG("TX-Dallas_YoY") as "TX-Dallas_YoY",
-                AVG("FL-Miami_YoY") as "FL-Miami_YoY"
+                MAX(CASE WHEN region_name = 'New York' THEN price_yoy END) as "New York_YoY",
+                MAX(CASE WHEN region_name = 'Los Angeles' THEN price_yoy END) as "Los Angeles_YoY",
+                MAX(CASE WHEN region_name = 'Chicago' THEN price_yoy END) as "Chicago_YoY",
+                MAX(CASE WHEN region_name = 'Dallas' THEN price_yoy END) as "Dallas_YoY",
+                MAX(CASE WHEN region_name = 'Miami' THEN price_yoy END) as "Miami_YoY"
             FROM 
-                housing_prices_cleaned
+                zillow_housing
+            WHERE
+                date = (SELECT MAX(date) FROM zillow_housing)
             GROUP BY 
-                date
-            ORDER BY 
-                date DESC
-            LIMIT 1;
+                date;
         """)
         logger.debug(f"Executing market heatmap query: {query}")
         df = pd.read_sql(query, engine)

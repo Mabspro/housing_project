@@ -1,5 +1,8 @@
 import React from 'react';
-import { Container, Typography, Box } from '@mui/material';
+import { Container, Typography, Box, Grid, Paper } from '@mui/material';
+import GrowthRatesChart from '../../components/charts/GrowthRatesChart';
+import MarketHeatmap from '../../components/charts/MarketHeatmap';
+import HousingAffordabilityChart from '../../components/charts/HousingAffordabilityChart';
 
 const MarketTrends: React.FC = () => {
   return (
@@ -8,9 +11,38 @@ const MarketTrends: React.FC = () => {
         <Typography variant="h4" component="h1" gutterBottom>
           Market Trends
         </Typography>
-        <Typography variant="body1">
-          Market trends analysis will be implemented here.
-        </Typography>
+        
+        <Grid container spacing={3}>
+          {/* Growth Rates Section */}
+          <Grid item xs={12}>
+            <Paper elevation={3} sx={{ p: 3 }}>
+              <Typography variant="h6" gutterBottom>
+                Year-over-Year Growth Rates
+              </Typography>
+              <GrowthRatesChart />
+            </Paper>
+          </Grid>
+
+          {/* Housing Affordability Section */}
+          <Grid item xs={12}>
+            <Paper elevation={3} sx={{ p: 3 }}>
+              <Typography variant="h6" gutterBottom>
+                Housing Affordability Analysis
+              </Typography>
+              <HousingAffordabilityChart />
+            </Paper>
+          </Grid>
+
+          {/* Market Heatmap Section */}
+          <Grid item xs={12}>
+            <Paper elevation={3} sx={{ p: 3 }}>
+              <Typography variant="h6" gutterBottom>
+                Current Market Performance
+              </Typography>
+              <MarketHeatmap />
+            </Paper>
+          </Grid>
+        </Grid>
       </Box>
     </Container>
   );

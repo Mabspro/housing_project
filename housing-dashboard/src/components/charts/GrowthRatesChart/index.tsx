@@ -31,7 +31,7 @@ const GrowthRatesChart: React.FC<GrowthRatesChartProps> = ({ data }) => {
 
   const layout: Partial<Layout> = {
     title: {
-      text: 'Year-over-Year Growth Rates',
+      text: 'Annual Rental Price Growth by Metropolitan Area (2010-2019)',
       font: {
         size: isMobile ? 14 : isTablet ? 16 : 18,
         family: 'Arial, sans-serif'
@@ -39,7 +39,7 @@ const GrowthRatesChart: React.FC<GrowthRatesChartProps> = ({ data }) => {
     },
     xaxis: {
       title: {
-        text: 'Date',
+        text: 'Year',
         font: {
           size: isMobile ? 10 : 12,
           family: 'Arial, sans-serif'
@@ -56,7 +56,7 @@ const GrowthRatesChart: React.FC<GrowthRatesChartProps> = ({ data }) => {
     },
     yaxis: {
       title: {
-        text: 'Growth Rate (Year-over-Year %)',
+        text: 'Year-over-Year Rental Growth (%)',
         font: {
           size: isMobile ? 10 : 12,
           family: 'Arial, sans-serif'
@@ -88,7 +88,7 @@ const GrowthRatesChart: React.FC<GrowthRatesChartProps> = ({ data }) => {
         family: 'Arial, sans-serif'
       } as any,
       title: { 
-        text: 'Markets',
+        text: 'Metropolitan Areas',
         font: {
           size: isMobile ? 9 : 11,
           family: 'Arial, sans-serif'
@@ -112,7 +112,7 @@ const GrowthRatesChart: React.FC<GrowthRatesChartProps> = ({ data }) => {
     modeBarButtonsToRemove: ['lasso2d', 'select2d', 'zoom2d', 'pan2d'] as any[],
     toImageButtonOptions: {
       format: 'png',
-      filename: 'growth_rates_chart'
+      filename: 'rental_growth_rates_chart'
     },
     scrollZoom: false
   };

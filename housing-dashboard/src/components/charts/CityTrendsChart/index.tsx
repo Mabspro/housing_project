@@ -23,7 +23,7 @@ const CityTrendsChart: React.FC<CityTrendsChartProps> = ({ data }) => {
     name: city,
     x: data.date,
     y: values,
-    hovertemplate: '%{y:.2f}<extra>%{fullData.name}</extra>',
+    hovertemplate: '$%{y:.2f}/month<extra>%{fullData.name}</extra>',
     line: {
       width: isMobile ? 1.5 : 2
     }
@@ -31,7 +31,7 @@ const CityTrendsChart: React.FC<CityTrendsChartProps> = ({ data }) => {
 
   const layout: Partial<Layout> = {
     title: {
-      text: 'Housing Price Trends by City',
+      text: 'Monthly Rental Price Trends by Metropolitan Area (2010-2019)',
       font: {
         size: isMobile ? 14 : isTablet ? 16 : 18,
         family: 'Arial, sans-serif'
@@ -39,7 +39,7 @@ const CityTrendsChart: React.FC<CityTrendsChartProps> = ({ data }) => {
     },
     xaxis: {
       title: {
-        text: 'Date',
+        text: 'Year',
         font: {
           size: isMobile ? 10 : 12,
           family: 'Arial, sans-serif'
@@ -56,7 +56,7 @@ const CityTrendsChart: React.FC<CityTrendsChartProps> = ({ data }) => {
     },
     yaxis: {
       title: {
-        text: 'Normalized Price Index',
+        text: 'Average Monthly Rent ($)',
         font: {
           size: isMobile ? 10 : 12,
           family: 'Arial, sans-serif'
@@ -85,7 +85,7 @@ const CityTrendsChart: React.FC<CityTrendsChartProps> = ({ data }) => {
         family: 'Arial, sans-serif'
       } as any,
       title: { 
-        text: 'Cities',
+        text: 'Metropolitan Areas',
         font: {
           size: isMobile ? 9 : 11,
           family: 'Arial, sans-serif'
@@ -109,7 +109,7 @@ const CityTrendsChart: React.FC<CityTrendsChartProps> = ({ data }) => {
     modeBarButtonsToRemove: ['lasso2d', 'select2d', 'zoom2d', 'pan2d'] as any[],
     toImageButtonOptions: {
       format: 'png',
-      filename: 'city_trends_chart'
+      filename: 'rental_trends_chart'
     },
     scrollZoom: false
   };

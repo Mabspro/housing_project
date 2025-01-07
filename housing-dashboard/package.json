@@ -30,7 +30,7 @@
   },
   "scripts": {
     "start": "set PORT=3001 && react-scripts start",
-    "start:api": "cd api && python -m uvicorn main:app --reload --port 8000",
+    "start:api": "cd api && python -m uvicorn main:app --reload --port 8002",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
