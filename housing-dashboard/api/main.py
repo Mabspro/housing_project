@@ -51,13 +51,13 @@ async def get_city_trends():
         query = text("""
             SELECT
                 TO_CHAR(date, 'YYYY-MM') as date,
-                AVG(CASE WHEN region_name = 'New York' THEN price END) as "New York",
-                AVG(CASE WHEN region_name = 'Los Angeles' THEN price END) as "Los Angeles",
-                AVG(CASE WHEN region_name = 'Chicago' THEN price END) as "Chicago",
-                AVG(CASE WHEN region_name = 'Dallas' THEN price END) as "Dallas",
-                AVG(CASE WHEN region_name = 'Miami' THEN price END) as "Miami"
+                AVG(CASE WHEN region_name = 'New York' THEN rental_price END) as "New York",
+                AVG(CASE WHEN region_name = 'Los Angeles' THEN rental_price END) as "Los Angeles",
+                AVG(CASE WHEN region_name = 'Chicago' THEN rental_price END) as "Chicago",
+                AVG(CASE WHEN region_name = 'Dallas' THEN rental_price END) as "Dallas",
+                AVG(CASE WHEN region_name = 'Miami' THEN rental_price END) as "Miami"
             FROM 
-                zillow_housing
+                rental_data
             GROUP BY
                 date
             ORDER BY 
@@ -102,13 +102,13 @@ async def get_growth_rates():
             WITH monthly_data AS (
                 SELECT 
                     date_trunc('month', date) as month_date,
-                    MAX(CASE WHEN region_name = 'New York' THEN price_yoy END) as "New York_YoY",
-                    MAX(CASE WHEN region_name = 'Los Angeles' THEN price_yoy END) as "Los Angeles_YoY",
-                    MAX(CASE WHEN region_name = 'Chicago' THEN price_yoy END) as "Chicago_YoY",
-                    MAX(CASE WHEN region_name = 'Dallas' THEN price_yoy END) as "Dallas_YoY",
-                    MAX(CASE WHEN region_name = 'Miami' THEN price_yoy END) as "Miami_YoY"
+                    MAX(CASE WHEN region_name = 'New York' THEN rental_yoy END) as "New York_YoY",
+                    MAX(CASE WHEN region_name = 'Los Angeles' THEN rental_yoy END) as "Los Angeles_YoY",
+                    MAX(CASE WHEN region_name = 'Chicago' THEN rental_yoy END) as "Chicago_YoY",
+                    MAX(CASE WHEN region_name = 'Dallas' THEN rental_yoy END) as "Dallas_YoY",
+                    MAX(CASE WHEN region_name = 'Miami' THEN rental_yoy END) as "Miami_YoY"
                 FROM 
-                    zillow_housing
+                    rental_data
                 WHERE
                     region_name IN ('New York', 'Los Angeles', 'Chicago', 'Dallas', 'Miami')
                 GROUP BY 
@@ -183,15 +183,15 @@ async def get_market_heatmap():
         query = text("""
             SELECT 
                 TO_CHAR(date, 'YYYY-MM') as date,
-                MAX(CASE WHEN region_name = 'New York' THEN price_yoy END) as "New York_YoY",
-                MAX(CASE WHEN region_name = 'Los Angeles' THEN price_yoy END) as "Los Angeles_YoY",
-                MAX(CASE WHEN region_name = 'Chicago' THEN price_yoy END) as "Chicago_YoY",
-                MAX(CASE WHEN region_name = 'Dallas' THEN price_yoy END) as "Dallas_YoY",
-                MAX(CASE WHEN region_name = 'Miami' THEN price_yoy END) as "Miami_YoY"
+                MAX(CASE WHEN region_name = 'New York' THEN rental_yoy END) as "New York_YoY",
+                MAX(CASE WHEN region_name = 'Los Angeles' THEN rental_yoy END) as "Los Angeles_YoY",
+                MAX(CASE WHEN region_name = 'Chicago' THEN rental_yoy END) as "Chicago_YoY",
+                MAX(CASE WHEN region_name = 'Dallas' THEN rental_yoy END) as "Dallas_YoY",
+                MAX(CASE WHEN region_name = 'Miami' THEN rental_yoy END) as "Miami_YoY"
             FROM 
-                zillow_housing
+                rental_data
             WHERE
-                date = (SELECT MAX(date) FROM zillow_housing)
+                date = (SELECT MAX(date) FROM rental_data)
             GROUP BY 
                 date;
         """)
