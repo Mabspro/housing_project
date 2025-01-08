@@ -26,11 +26,18 @@ app = FastAPI(title="Housing Market Analysis API")
 def read_root():
     return {
         "message": "Welcome to the Housing Market Analysis API",
-        "available_endpoints": [
-            "/api/city-trends",
-            "/api/growth-rates",
-            "/api/market-heatmap"
-        ],
+        "available_endpoints": {
+            "price_trends": [
+                "/api/city-trends",
+                "/api/growth-rates",
+                "/api/market-heatmap"
+            ],
+            "rental_data": [
+                "/api/city-trends (rental prices)",
+                "/api/growth-rates (rental growth)",
+                "/api/market-heatmap (rental market performance)"
+            ]
+        },
         "documentation": "/docs"
     }
 
