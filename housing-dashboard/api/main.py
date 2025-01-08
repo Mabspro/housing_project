@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 # Load environment variables
 load_dotenv()
 
-app = FastAPI(title="Housing Market Analysis API", root_path="/api")
+app = FastAPI(title="Housing Market Analysis API")
 
 # Configure CORS
 app.add_middleware(
@@ -42,7 +42,7 @@ def get_db_connection():
     db_url = f"postgresql://{os.getenv('DB_USER')}:{password}@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
     return create_engine(db_url)
 
-@app.get("/city-trends")
+@app.get("/api/city-trends")
 async def get_city_trends():
     try:
         logger.info("Attempting to fetch city trends data...")
@@ -92,7 +92,7 @@ async def get_city_trends():
         logger.error(error_msg, exc_info=True)
         raise HTTPException(status_code=500, detail=error_msg)
 
-@app.get("/growth-rates")
+@app.get("/api/growth-rates")
 async def get_growth_rates():
     try:
         logger.info("Fetching growth rates data...")
@@ -175,7 +175,7 @@ async def get_growth_rates():
         logger.error(error_msg, exc_info=True)
         raise HTTPException(status_code=500, detail=error_msg)
 
-@app.get("/market-heatmap")
+@app.get("/api/market-heatmap")
 async def get_market_heatmap():
     try:
         logger.info("Fetching market heatmap data...")
