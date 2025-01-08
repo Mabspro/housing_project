@@ -22,6 +22,18 @@ load_dotenv()
 
 app = FastAPI(title="Housing Market Analysis API")
 
+@app.get("/")
+def read_root():
+    return {
+        "message": "Welcome to the Housing Market Analysis API",
+        "available_endpoints": [
+            "/api/city-trends",
+            "/api/growth-rates",
+            "/api/market-heatmap"
+        ],
+        "documentation": "/docs"
+    }
+
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
