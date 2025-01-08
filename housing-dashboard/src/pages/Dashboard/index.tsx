@@ -157,7 +157,7 @@ const DashboardPage: React.FC = () => {
             color: 'primary.main'
           }}
         >
-          Rental Market Trends and Statistics
+          Housing Price Trends and Statistics
         </Typography>
         
         <Typography 
@@ -172,7 +172,7 @@ const DashboardPage: React.FC = () => {
             lineHeight: 1.6
           }}
         >
-          Explore comprehensive insights into rental market trends, growth patterns, and regional performance metrics across major metropolitan areas.
+          Explore comprehensive insights into housing price trends, growth patterns, and regional market performance metrics across major metropolitan areas.
         </Typography>
 
         <Grid container spacing={{ xs: 2, sm: 3 }} sx={{ mb: { xs: 3, sm: 4 } }}>
@@ -199,7 +199,7 @@ const DashboardPage: React.FC = () => {
                   mb: { xs: 0.5, sm: 1 }
                 }}
               >
-                Highest Rental Growth
+                Highest Price Growth
               </Typography>
               <Typography 
                 variant="h6" 
@@ -237,7 +237,7 @@ const DashboardPage: React.FC = () => {
                   mb: { xs: 0.5, sm: 1 }
                 }}
               >
-                Lowest Rental Growth
+                Lowest Price Growth
               </Typography>
               <Typography 
                 variant="h6" 
@@ -278,7 +278,7 @@ const DashboardPage: React.FC = () => {
                     alignItems: 'center'
                   }}
                 >
-                  Rental Growth Since 2010
+                  Price Growth Since 2010
                   <Typography
                     component="span"
                     sx={{
@@ -290,7 +290,7 @@ const DashboardPage: React.FC = () => {
                         color: 'primary.main'
                       }
                     }}
-                    title="Average rental price growth across all cities from 2010 to present"
+                    title="Average housing price growth across all cities from 2010 to present"
                   >
                     ⓘ
                   </Typography>
