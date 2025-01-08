@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Grid, Paper, Typography, Box, CircularProgress } from '@mui/material';
-import CityTrendsChart from '../../components/charts/CityTrendsChart';
-import GrowthRatesChart from '../../components/charts/GrowthRatesChart';
+import MarketTrendsChart from '../../components/charts/MarketTrendsChart';
+import MarketGrowthChart from '../../components/charts/MarketGrowthChart';
 import MarketHeatmap from '../../components/charts/MarketHeatmap';
-import api, { CityTrendsData, GrowthRatesData, MarketHeatmapData } from '../../services/api';
+import CityList from '../../components/layout/CityList';
+import api, { HistoricalTrendsData, HistoricalGrowthData, MarketHeatmapData } from '../../services/api';
 
 interface DashboardData {
-  cityTrends: CityTrendsData | null;
-  growthRates: GrowthRatesData | null;
+  cityTrends: HistoricalTrendsData | null;
+  growthRates: HistoricalGrowthData | null;
   marketHeatmap: MarketHeatmapData | null;
 }
 
@@ -17,7 +18,7 @@ const formatPercentage = (value: number): string => {
 };
 
 // Helper function to get stats from data
-const getStats = (data: CityTrendsData | null) => {
+const getStats = (data: HistoricalTrendsData | null) => {
   if (!data) return { hpiGrowth: 'N/A', totalCities: 0 };
   const cities = Object.keys(data.values);
   const lastIndex = data.date.length - 1;
@@ -39,14 +40,23 @@ const getStats = (data: CityTrendsData | null) => {
 
   const averageGrowth = validCityCount > 0 ? totalGrowth / validCityCount : 0;
 
+  // Calculate total cities from categories
+  const cityCounts: Record<string, number> = {
+    'National': 1,
+    'Top 20 Cities': 20,
+    'Top 10 Cities': 10
+  };
+  const totalCities = Object.keys(data.values).reduce((sum, category) => 
+    sum + (cityCounts[category as keyof typeof cityCounts] || 0), 0);
+
   return {
     hpiGrowth: formatPercentage(averageGrowth),
-    totalCities: cities.length
+    totalCities: totalCities
   };
 };
 
 // Helper function to get growth stats
-const getGrowthStats = (data: GrowthRatesData | null) => {
+const getGrowthStats = (data: HistoricalGrowthData | null) => {
   if (!data) return { highestGrowth: 'N/A', lowestGrowth: 'N/A' };
   const lastIndex = data.date.length - 1;
   let highest = -Infinity;
@@ -85,8 +95,8 @@ const DashboardPage: React.FC = () => {
     const loadData = async () => {
       try {
         const [cityTrends, growthRates, marketHeatmap] = await Promise.all([
-          api.fetchCityTrends(),
-          api.fetchGrowthRates(),
+          api.fetchHistoricalTrends(),
+          api.fetchHistoricalGrowth(),
           api.fetchMarketHeatmap()
         ]);
 
@@ -157,7 +167,7 @@ const DashboardPage: React.FC = () => {
             color: 'primary.main'
           }}
         >
-          Housing Price Trends and Statistics
+          Historical Housing Price Trends
         </Typography>
         
         <Typography 
@@ -172,7 +182,7 @@ const DashboardPage: React.FC = () => {
             lineHeight: 1.6
           }}
         >
-          Explore comprehensive insights into housing price trends, growth patterns, and regional market performance metrics across major metropolitan areas.
+          Explore comprehensive insights into historical housing price trends, growth patterns, and long-term market performance metrics across major metropolitan areas.
         </Typography>
 
         <Grid container spacing={{ xs: 2, sm: 3 }} sx={{ mb: { xs: 3, sm: 4 } }}>
@@ -199,7 +209,7 @@ const DashboardPage: React.FC = () => {
                   mb: { xs: 0.5, sm: 1 }
                 }}
               >
-                Highest Price Growth
+                Highest Historical Growth
               </Typography>
               <Typography 
                 variant="h6" 
@@ -237,7 +247,7 @@ const DashboardPage: React.FC = () => {
                   mb: { xs: 0.5, sm: 1 }
                 }}
               >
-                Lowest Price Growth
+                Lowest Historical Growth
               </Typography>
               <Typography 
                 variant="h6" 
@@ -278,7 +288,7 @@ const DashboardPage: React.FC = () => {
                     alignItems: 'center'
                   }}
                 >
-                  Price Growth Since 2010
+                  Price Growth Since 2000
                   <Typography
                     component="span"
                     sx={{
@@ -290,7 +300,7 @@ const DashboardPage: React.FC = () => {
                         color: 'primary.main'
                       }
                     }}
-                    title="Average housing price growth across all cities from 2010 to present"
+                    title="Average housing price growth across all cities from 2000 to present"
                   >
                     ⓘ
                   </Typography>
@@ -382,7 +392,7 @@ const DashboardPage: React.FC = () => {
                   minWidth: { xs: '600px', md: '100%' }
                 }
               }}>
-                {data.cityTrends && <CityTrendsChart data={data.cityTrends} />}
+                <MarketTrendsChart data={data.cityTrends} />
               </Box>
             </Paper>
           </Grid>
@@ -421,7 +431,7 @@ const DashboardPage: React.FC = () => {
                   minWidth: { xs: '600px', md: '100%' }
                 }
               }}>
-                {data.growthRates && <GrowthRatesChart data={data.growthRates} />}
+                <MarketGrowthChart data={data.growthRates} />
               </Box>
             </Paper>
           </Grid>
@@ -460,11 +470,13 @@ const DashboardPage: React.FC = () => {
                   minWidth: { xs: '600px', md: '100%' }
                 }
               }}>
-                {data.marketHeatmap && <MarketHeatmap data={data.marketHeatmap} />}
+                <MarketHeatmap data={data.marketHeatmap} />
               </Box>
             </Paper>
           </Grid>
         </Grid>
+
+        <CityList />
       </Box>
     </Container>
   );
