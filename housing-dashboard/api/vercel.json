@@ -3,21 +3,13 @@
   "builds": [
     {
       "src": "main.py",
-      "use": "@vercel/python",
-      "config": { "runtime": "python3.9" }
+      "use": "@vercel/python"
     }
   ],
-  "rewrites": [
-    { "source": "/api/(.*)", "destination": "/main.py" }
-  ],
-  "headers": [
+  "routes": [
     {
-      "source": "/api/(.*)",
-      "headers": [
-        { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "Access-Control-Allow-Methods", "value": "GET, POST, OPTIONS" },
-        { "key": "Access-Control-Allow-Headers", "value": "*" }
-      ]
+      "src": "/(.*)",
+      "dest": "main.py"
     }
   ]
 }
