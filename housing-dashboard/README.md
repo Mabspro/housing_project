@@ -14,6 +14,12 @@ This project uses the [U.S. Housing Prices Regional Trends (2000-2023)](https://
 - Market performance heatmaps
 - Mobile-responsive design
 
+## Architecture
+
+- Frontend: Deployed on GitHub Pages
+- Backend API: Deployed on Vercel (housing-dashboard-api.vercel.app)
+- Database: PostgreSQL hosted on Supabase
+
 ## Getting Started
 
 1. Clone the repository
@@ -31,6 +37,12 @@ npm install
 ```bash
 npm start
 ```
+
+## API Documentation
+
+The API documentation is available at:
+- Development: http://localhost:8002/docs
+- Production: https://housing-dashboard-api.vercel.app/docs
 
 ## Built With
 
