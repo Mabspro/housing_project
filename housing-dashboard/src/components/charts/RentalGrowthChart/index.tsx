@@ -51,7 +51,7 @@ const RentalGrowthChart: React.FC = () => {
   }));
 
   const layout: Partial<Layout> = {
-    title: 'Year-over-Year Rental Growth Rates by Metropolitan Area',
+    title: 'Year-over-Year Rental Growth by Metropolitan Area',
     xaxis: {
       title: 'Date',
       showgrid: true,

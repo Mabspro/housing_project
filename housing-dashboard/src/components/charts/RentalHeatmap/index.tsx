@@ -67,7 +67,7 @@ const RentalHeatmap: React.FC = () => {
   }];
 
   const layout: Partial<Layout> = {
-    title: 'Current Rental Market Performance by Metropolitan Area',
+    title: 'Current Rental Market Growth by Metropolitan Area',
     xaxis: {
       title: 'Metropolitan Area',
       tickangle: -45,
@@ -85,6 +85,7 @@ const RentalHeatmap: React.FC = () => {
       t: 50,
       b: 100, // Increased bottom margin for rotated labels
     },
+    showlegend: false,
   };
 
   const config = {
@@ -102,8 +103,11 @@ const RentalHeatmap: React.FC = () => {
         style={{ width: '100%', height: '100%' }}
       />
       <Box mt={2}>
-        <Typography variant="body2" color="textSecondary">
+        <Typography variant="body2" color="text.secondary">
           * Growth rates represent year-over-year changes in average rental prices
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          * Colors indicate growth intensity: green for positive growth, red for decline
         </Typography>
       </Box>
     </Box>

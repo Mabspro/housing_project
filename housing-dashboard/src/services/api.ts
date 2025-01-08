@@ -47,7 +47,7 @@ export interface HousingAffordabilityData {
   };
 }
 
-// API calls for both price trends and rental data
+// Price trends API calls
 export const fetchCityTrends = async (): Promise<CityTrendsData> => {
   try {
     const response = await fetch(`${API_BASE_URL}/city-trends`);
@@ -87,10 +87,45 @@ export const fetchMarketHeatmap = async (): Promise<MarketHeatmapData> => {
   }
 };
 
-// Use the same endpoints for rental data since they return the same structure
-export const fetchRentalTrends = fetchCityTrends;
-export const fetchRentalGrowth = fetchGrowthRates;
-export const fetchRentalHeatmap = fetchMarketHeatmap;
+// Rental data API calls
+export const fetchRentalTrends = async (): Promise<RentalTrendsData> => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/rental-trends`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch rental trends data');
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching rental trends:', error);
+    throw error;
+  }
+};
+
+export const fetchRentalGrowth = async (): Promise<RentalGrowthData> => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/rental-growth`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch rental growth data');
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching rental growth:', error);
+    throw error;
+  }
+};
+
+export const fetchRentalHeatmap = async (): Promise<RentalHeatmapData> => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/rental-heatmap`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch rental heatmap data');
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching rental heatmap:', error);
+    throw error;
+  }
+};
 
 export const fetchHousingAffordability = async (): Promise<HousingAffordabilityData> => {
   try {
