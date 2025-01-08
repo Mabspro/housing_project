@@ -16,10 +16,10 @@
       ]
     }
   ],
-  "rewrites": [
+  "routes": [
     {
-      "source": "/api/(.*)",
-      "destination": "main.py"
+      "src": "/api/(.*)",
+      "dest": "main.py"
     }
   ]
 }
