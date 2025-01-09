@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, APIRouter
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import pandas as pd
 from sqlalchemy import create_engine, text
@@ -21,7 +21,6 @@ logger = logging.getLogger(__name__)
 load_dotenv()
 
 app = FastAPI(title="Housing Market Analysis API")
-router = APIRouter()
 
 @app.get("/")
 def read_root():
@@ -36,10 +35,7 @@ def read_root():
             "market_analysis": [
                 "/api/market-trends",  # Current data from zillow_housing
                 "/api/market-growth",  # Current growth rates
-                "/api/market-heatmap",  # Current market performance
-                "/api/rental-trends",  # Alias for market-trends (backward compatibility)
-                "/api/rental-growth",  # Alias for market-growth (backward compatibility)
-                "/api/rental-heatmap"  # Alias for market-heatmap (backward compatibility)
+                "/api/market-heatmap"  # Current market performance
             ]
         },
         "documentation": "/docs"
@@ -126,10 +122,8 @@ async def get_growth_rates():
         logger.error(error_msg, exc_info=True)
         raise HTTPException(status_code=500, detail=error_msg)
 
-@router.get("/api/{endpoint_type}-trends")
-async def get_market_trends(endpoint_type: str):
-    if endpoint_type not in ["market", "rental"]:
-        raise HTTPException(status_code=404, detail="Invalid endpoint type")
+@app.get("/api/market-trends")
+async def get_rental_trends():
     try:
         logger.info("Attempting to fetch current market trends data...")
         engine = get_db_connection()
@@ -176,10 +170,8 @@ async def get_market_trends(endpoint_type: str):
         logger.error(error_msg, exc_info=True)
         raise HTTPException(status_code=500, detail=error_msg)
 
-@router.get("/api/{endpoint_type}-growth")
-async def get_market_growth(endpoint_type: str):
-    if endpoint_type not in ["market", "rental"]:
-        raise HTTPException(status_code=404, detail="Invalid endpoint type")
+@app.get("/api/market-growth")
+async def get_rental_growth():
     try:
         logger.info("Fetching current market growth rates data...")
         engine = get_db_connection()
@@ -238,10 +230,8 @@ async def get_market_growth(endpoint_type: str):
         logger.error(error_msg, exc_info=True)
         raise HTTPException(status_code=500, detail=error_msg)
 
-@router.get("/api/{endpoint_type}-heatmap")
-async def get_market_heatmap(endpoint_type: str):
-    if endpoint_type not in ["market", "rental"]:
-        raise HTTPException(status_code=404, detail="Invalid endpoint type")
+@app.get("/api/market-heatmap")
+async def get_rental_heatmap():
     try:
         logger.info("Fetching current market heatmap data...")
         engine = get_db_connection()
@@ -316,9 +306,6 @@ def get_db_connection():
     password = quote_plus(os.getenv('DB_PASSWORD'))
     db_url = f"postgresql://{os.getenv('DB_USER')}:{password}@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
     return create_engine(db_url)
-
-# Include the router
-app.include_router(router)
 
 if __name__ == "__main__":
     import uvicorn
