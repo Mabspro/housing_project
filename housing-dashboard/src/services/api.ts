@@ -57,7 +57,7 @@ export const fetchHistoricalGrowth = async (): Promise<HistoricalGrowthData> => 
 // Current market data API calls (Market Trends)
 export const fetchMarketTrends = async (): Promise<MarketTrendsData> => {
   try {
-    const response = await fetch(`${API_BASE_URL}/market-trends`);
+    const response = await fetch(`${API_BASE_URL}/market-trends`.replace('/api/api/', '/api/'));
     if (!response.ok) {
       throw new Error('Failed to fetch market trends data');
     }
@@ -70,7 +70,7 @@ export const fetchMarketTrends = async (): Promise<MarketTrendsData> => {
 
 export const fetchMarketGrowth = async (): Promise<MarketGrowthData> => {
   try {
-    const response = await fetch(`${API_BASE_URL}/market-growth`);
+    const response = await fetch(`${API_BASE_URL}/market-growth`.replace('/api/api/', '/api/'));
     if (!response.ok) {
       throw new Error('Failed to fetch market growth data');
     }
@@ -83,7 +83,7 @@ export const fetchMarketGrowth = async (): Promise<MarketGrowthData> => {
 
 export const fetchMarketHeatmap = async (): Promise<MarketHeatmapData> => {
   try {
-    const response = await fetch(`${API_BASE_URL}/market-heatmap`);
+    const response = await fetch(`${API_BASE_URL}/market-heatmap`.replace('/api/api/', '/api/'));
     if (!response.ok) {
       throw new Error('Failed to fetch market heatmap data');
     }
