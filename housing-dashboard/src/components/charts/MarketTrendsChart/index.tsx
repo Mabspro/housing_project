@@ -1,14 +1,14 @@
 import React from 'react';
 import Plot from 'react-plotly.js';
 import { Box, Typography } from '@mui/material';
-import { MarketHeatmapData } from '../../../services/api';
+import { HistoricalTrendsData, MarketTrendsData } from '../../../services/api';
 import { Data, Layout } from 'plotly.js';
 
-interface MarketHeatmapProps {
-  data: MarketHeatmapData | null;
+interface MarketTrendsChartProps {
+  data: HistoricalTrendsData | MarketTrendsData | null;
 }
 
-const MarketHeatmap: React.FC<MarketHeatmapProps> = ({ data }) => {
+const MarketTrendsChart: React.FC<MarketTrendsChartProps> = ({ data }) => {
   if (!data) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="400px">
@@ -17,30 +17,35 @@ const MarketHeatmap: React.FC<MarketHeatmapProps> = ({ data }) => {
     );
   }
 
-  const plotData: Data[] = [{
-    type: 'bar' as const,
-    x: data.markets,
-    y: data.growthRates,
-    marker: {
-      color: data.growthRates.map((rate: number) => 
-        rate >= 0 ? 'rgb(0, 128, 0)' : 'rgb(255, 0, 0)'
-      ),
-    },
-  }];
+  const plotData: Data[] = Object.entries(data.values).map(([city, values]) => ({
+    x: data.date,
+    y: values as number[],
+    name: city,
+    type: 'scatter' as const,
+    mode: 'lines' as const,
+  }));
 
   const layout: Partial<Layout> = {
-    title: 'Current Market Growth Rates by Metropolitan Area',
+    title: 'Housing Price Trends by Metropolitan Area',
     xaxis: {
-      title: 'Metropolitan Area',
-      showgrid: false,
-    },
-    yaxis: {
-      title: 'Year-over-Year Growth Rate (%)',
+      title: 'Date',
       showgrid: true,
       gridcolor: '#E1E5EA',
-      tickformat: '.1f',
-      hoverformat: '.2f',
     },
+    yaxis: {
+      title: 'Price ($)',
+      showgrid: true,
+      gridcolor: '#E1E5EA',
+      tickformat: ',.0f',
+      hoverformat: ',.2f',
+    },
+    showlegend: true,
+    legend: {
+      x: 1,
+      xanchor: 'right' as const,
+      y: 1,
+    },
+    hovermode: 'x unified' as const,
     height: 600,
     margin: {
       l: 50,
@@ -68,4 +73,4 @@ const MarketHeatmap: React.FC<MarketHeatmapProps> = ({ data }) => {
   );
 };
 
-export default MarketHeatmap;
+export default MarketTrendsChart;
