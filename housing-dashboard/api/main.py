@@ -127,7 +127,7 @@ async def get_growth_rates():
 
 @app.get("/api/market-trends")
 @app.get("/api/rental-trends")
-async def get_rental_trends():
+async def get_market_trends():
     try:
         logger.info("Attempting to fetch current market trends data...")
         engine = get_db_connection()
@@ -176,7 +176,7 @@ async def get_rental_trends():
 
 @app.get("/api/market-growth")
 @app.get("/api/rental-growth")
-async def get_rental_growth():
+async def get_market_growth():
     try:
         logger.info("Fetching current market growth rates data...")
         engine = get_db_connection()
@@ -237,7 +237,7 @@ async def get_rental_growth():
 
 @app.get("/api/market-heatmap")
 @app.get("/api/rental-heatmap")
-async def get_rental_heatmap():
+async def get_market_heatmap():
     try:
         logger.info("Fetching current market heatmap data...")
         engine = get_db_connection()
