@@ -293,6 +293,7 @@ app.add_middleware(
         "https://mabspro.github.io",  # Frontend hosted on GitHub Pages
         "http://localhost:3000",  # Local frontend for development
         "http://localhost:3001",
+        "https://housing-project-r7jbm7l0e-mabvuto-kaelas-projects.vercel.app",  # Vercel deployment
     ],
     allow_credentials=True,
     allow_methods=["*"],
