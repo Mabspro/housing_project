@@ -1,6 +1,6 @@
 // Trigger rebuild with new API URL
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import MainLayout from './components/layout/MainLayout';
 import Dashboard from './pages/Dashboard';
 import MarketTrends from './pages/MarketTrends';
@@ -10,7 +10,7 @@ import './App.css';
 
 function App() {
   return (
-    <Router basename="/housing_project">
+    <Router>
       <MainLayout>
         <Routes>
           <Route path="/" element={<Dashboard />} />
