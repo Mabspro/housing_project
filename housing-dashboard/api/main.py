@@ -35,7 +35,10 @@ def read_root():
             "market_analysis": [
                 "/api/market-trends",  # Current data from zillow_housing
                 "/api/market-growth",  # Current growth rates
-                "/api/market-heatmap"  # Current market performance
+                "/api/market-heatmap",  # Current market performance
+                "/api/rental-trends",  # Alias for market-trends (backward compatibility)
+                "/api/rental-growth",  # Alias for market-growth (backward compatibility)
+                "/api/rental-heatmap"  # Alias for market-heatmap (backward compatibility)
             ]
         },
         "documentation": "/docs"
@@ -123,6 +126,7 @@ async def get_growth_rates():
         raise HTTPException(status_code=500, detail=error_msg)
 
 @app.get("/api/market-trends")
+@app.get("/api/rental-trends")
 async def get_rental_trends():
     try:
         logger.info("Attempting to fetch current market trends data...")
@@ -171,6 +175,7 @@ async def get_rental_trends():
         raise HTTPException(status_code=500, detail=error_msg)
 
 @app.get("/api/market-growth")
+@app.get("/api/rental-growth")
 async def get_rental_growth():
     try:
         logger.info("Fetching current market growth rates data...")
@@ -231,6 +236,7 @@ async def get_rental_growth():
         raise HTTPException(status_code=500, detail=error_msg)
 
 @app.get("/api/market-heatmap")
+@app.get("/api/rental-heatmap")
 async def get_rental_heatmap():
     try:
         logger.info("Fetching current market heatmap data...")
