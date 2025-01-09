@@ -2,7 +2,6 @@
   "name": "housing-dashboard",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://mabspro.github.io/housing_project",
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -35,9 +34,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "install:api": "cd api && pip install -r requirements.txt",
-    "dev": "concurrently \"npm run start\" \"npm run start:api\"",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "dev": "concurrently \"npm run start\" \"npm run start:api\""
   },
   "eslintConfig": {
     "extends": [
@@ -60,7 +57,6 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/node": "^22.10.4",
-    "concurrently": "^8.2.2",
-    "gh-pages": "^6.3.0"
+    "concurrently": "^8.2.2"
   }
 }
