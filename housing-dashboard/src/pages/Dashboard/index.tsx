@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Grid, Paper, Typography, Box, CircularProgress } from '@mui/material';
-import MarketTrendsChart from '../../components/charts/MarketTrendsChart/index';
-import MarketGrowthChart from '../../components/charts/MarketGrowthChart/index';
-import MarketHeatmap from '../../components/charts/MarketHeatmap/index';
+import MarketTrendsChart from '../../components/charts/MarketTrendsChart';
+import MarketGrowthChart from '../../components/charts/MarketGrowthChart';
+import MarketHeatmap from '../../components/charts/MarketHeatmap';
 import CityList from '../../components/layout/CityList';
 import api, { HistoricalTrendsData, HistoricalGrowthData, MarketHeatmapData } from '../../services/api';
 
