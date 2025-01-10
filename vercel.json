@@ -1,0 +1,31 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "housing-dashboard/api/main.py",
+      "use": "@vercel/python",
+      "config": { 
+        "runtime": "python3.11",
+        "maxLambdaSize": "15mb"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "housing-dashboard/api/main.py"
+    },
+    {
+      "src": "/docs",
+      "dest": "housing-dashboard/api/main.py"
+    },
+    {
+      "src": "/openapi.json",
+      "dest": "housing-dashboard/api/main.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "housing-dashboard/api/main.py"
+    }
+  ]
+}
