@@ -10,7 +10,7 @@ import './App.css';
 
 function App() {
   return (
-    <Router basename="/housing_project">
+    <Router>
       <MainLayout>
         <Routes>
           <Route path="/" element={<Dashboard />} />
