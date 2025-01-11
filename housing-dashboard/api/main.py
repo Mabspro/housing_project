@@ -289,13 +289,7 @@ async def get_rental_heatmap():
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "https://mabspro.github.io",  # Frontend hosted on GitHub Pages
-        "http://localhost:3000",  # Local frontend for development
-        "http://localhost:3001",
-        "https://housing-project-r7jbm7l0e-mabvuto-kaelas-projects.vercel.app",  # Vercel deployment
-        "https://housing-dashboard-six.vercel.app",  # Current dashboard deployment
-    ],
+    allow_origins=["*"],  # Allow all origins
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
